@@ -1,120 +1,137 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
+import Button from './components/Button/Button'
+import Card from './components/Card/Card'
 import './App.css'
+import axios from 'axios'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tarefa, setTarefa] = useState("")
+  const [tasklist, setTaskList] = useState([])
+  const [edit, setEdit] = useState(false)
+  const [idEdit, setIdEdit] = useState("")
+  
+  useEffect(() => {
+    funcGet()
+  }, [])
 
+
+  const funcGet = async() => {
+    try{
+    const apiReturn = await axios.get("http://localhost:3000/tasklist")
+    setTaskList(apiReturn.data)
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }
+
+  const funcPost = async() => {
+    try{
+    
+    if(tarefa.length > 0)
+    {
+    await axios.post("http://localhost:3000/tasklist", {"nome": tarefa})
+    setTarefa("")
+    funcGet()
+    }
+    else
+    {
+      alert("Voce deve preencher a descrição da tarefa")
+    }
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }  
+
+  const funcDelete = async(id, nome) => {
+    try{
+    
+    const returnPrompt = confirm(`Você deseja apagar essa a tarefa "${nome}"?`)
+    
+    if(returnPrompt == true)
+    {
+    await axios.delete(`http://localhost:3000/tasklist/${id}`)
+    funcGet()
+    }
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }
+
+  const cancelEdit = () => {
+   setTarefa("")
+   setEdit(false)
+  }
+
+
+  const funcPreEdit = async(idEdit, nome) => {
+    setEdit(true)
+    setIdEdit(idEdit)    
+    setTarefa(nome)
+  }
+
+  const funcEdit = async() => {
+    try{
+
+    const updatedTask = {
+      "id": idEdit,
+      "nome": tarefa
+    }
+    
+    if(tarefa.length > 0)
+    {
+    await axios.put(`http://localhost:3000/tasklist/${idEdit}`, updatedTask)
+    funcGet()
+
+    setEdit(false)
+    setTarefa("")
+    }
+    else
+    {
+      alert("preencha a descrição da tarefa que será atualizada")
+    }
+
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }
+  
+
+  
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <header className='header-section'>
+      <h1 className='header-section__title'>To do List</h1>
+    </header>
+    <main className='body-section'>
+      <form>
+      <input className='body-section__input' placeholder="Adicione uma tarefa" value={tarefa} onChange={(e) => {setTarefa(e.target.value)}}/>
+      
+       <Button buttonClass="add" buttonType="button" buttonFunc={edit == true? () => funcEdit(idEdit) : funcPost} buttonText={edit == true? "Editar tarefa" : "Adicionar"} buttonColor="#60A771"/>
+        <Button buttonClass="cancel" buttonType="button" buttonFunc={() => cancelEdit(false)} buttonText="Cancelar edição" buttonColor="#f69400" buttonDisplay={edit == true ? "block" : "none"}/>
+ 
+       </form>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+       <section className='cadlist'>
+        <ul>
+         {tasklist.map((task) => (
+    
+            <Card key={task.id} cardText={task.nome} funcEdit={() => funcPreEdit(task.id, task.nome)} funcDelete={() => funcDelete(task.id, task.nome)}/>
+           
+         ))}
+        </ul>
+       </section>
+    </main>
+    <footer className='footer-section'>
+      <p className='footer-section__right-text'> 2026 React List - Todos os direitos reservados</p>
+    </footer>
     </>
   )
 }

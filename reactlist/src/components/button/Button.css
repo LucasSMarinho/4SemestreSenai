@@ -1,0 +1,23 @@
+Button
+{
+    height: 20px;
+    width: 100%;
+
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+
+    color: white;
+
+    transition: 0.5s;
+}
+
+.addButton:hover
+{
+    box-shadow: #60A771 0 0 15px;
+}
+
+.cancelButton:hover
+{
+    box-shadow: #f69400 0 0 15px;
+}
