@@ -15,7 +15,7 @@ import { StyleSheet } from "react-native";
         fontSize: 24,
         borderBottomWidth: 3,
         borderBottomStyle: 'solid',
-        borderBottomColor: 'green'
+        borderBottomColor: '#60A771'
     }
 
 

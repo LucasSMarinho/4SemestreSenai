@@ -1,11 +1,20 @@
-import { Text, View } from 'react-native';
+import { Image, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import { TaskItemStyle } from './TaskItem';
+import TrashImage from '../../../assets/trashIcon.png'
+import PenImage from '../../../assets/penIcon.png'
 
-function TaskItem() {
+export default function TaskItem(props) {
   return (
-    <View>
-      <Text>Task Item</Text>
+    <View style={TaskItemStyle.cardBox}>
+      <Text style={TaskItemStyle.cardBoxText}>{props.nome}</Text>
+      <View style={TaskItemStyle.cardImages}>
+      <TouchableOpacity onPress={props.funcDelete} style={[TaskItemStyle.taskPressableTrash, TaskItemStyle.taskPressable]}>
+      <Image style={TaskItemStyle.taskItemImage} source={TrashImage}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={[TaskItemStyle.taskPressablePen, TaskItemStyle.taskPressable]}>
+      <Image style={TaskItemStyle.taskItemImage} source={PenImage}/>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
-
-export default TaskItem;

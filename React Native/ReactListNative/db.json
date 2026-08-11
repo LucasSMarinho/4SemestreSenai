@@ -1,0 +1,17 @@
+{
+  "tasklist": [
+    {
+      "nome": "Fazer jantar",
+      "id": "1"
+    },
+    {
+      "nome": "Lavar Roupa",
+      "id": "2"
+    },
+    {
+      "nome": "Limpar computador",
+      "id": "De61nZj_c8Q"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
