@@ -3,12 +3,9 @@ import { StyleSheet } from "react-native";
    export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'black',
-        borderWidth: 3,
-        borderStyle: 'solid',
-        borderColor: 'red'
+        backgroundColor: '#1D2135'
     },
     safeArea: {
         flex: 1,
@@ -17,6 +14,6 @@ import { StyleSheet } from "react-native";
     text: {
         color: 'white'
     }
-
+  
 
    })

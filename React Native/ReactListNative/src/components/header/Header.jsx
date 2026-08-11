@@ -1,10 +1,10 @@
 import { Text, View } from 'react-native';
-import { styles } from './Styles';
+import { HeaderStyle } from './HeaderStyle';
 
 function Header() {
   return (
-    <View style={styles.header}>
-      <Text style={styles.headerTitle}>React List</Text>
+    <View style={HeaderStyle.header}>
+      <Text style={HeaderStyle.headerTitle}>To do List</Text>
     </View>
   );
 }
