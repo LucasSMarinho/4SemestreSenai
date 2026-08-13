@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { TemaContext } from "./TemaContext";
+import { TaskContext } from "./TaskContext";
 
-export const TemaProvider = ({ children }) => {
+export const TaskProvider = ({ children }) => {
   const [tarefa, setTarefa] = useState("")
   const [listaTarefas, setListaTarefas] = useState([])
 
   
   return (
-    <TemaContext.Provider value={ {tarefa, setTarefa, setListaTarefas, listaTarefas} }>
+    <TaskContext.Provider value={ {tarefa, setTarefa, setListaTarefas, listaTarefas} }>
       {children}
-    </TemaContext.Provider>
+    </TaskContext.Provider>
   )
 }

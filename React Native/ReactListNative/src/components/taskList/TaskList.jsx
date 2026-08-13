@@ -2,7 +2,7 @@ import { ScrollView } from 'react-native';
 import { TaskListStyle } from './TaskListStyle';
 import TaskItem from '../taskItem/TaskItem.jsx';
 import { useContext, useEffect, useState } from 'react';
-import { TaskContext } from './context/TaskContext'
+import { TaskContext } from '../../context/TaskContext.jsx'
 import axios from 'axios'
 
 

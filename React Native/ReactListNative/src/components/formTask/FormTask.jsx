@@ -24,9 +24,10 @@ function FormTask() {
           nome: taskValue
         }
         
-        funcGet()
+        
         await axios.post('http://172.16.36.48:3000/tasklist', tarefa)
-        setListaTarefas(...listaTarefas, tarefa)
+        setListaTarefas([...listaTarefas, tarefa])
+        funcGet()
 
       } catch (error) {
         console.log(error)
