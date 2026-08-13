@@ -1,13 +1,13 @@
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { TaskListStyle } from './TaskListStyle';
 import TaskItem from '../taskItem/TaskItem.jsx';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { TaskContext } from '../../context/TaskContext.jsx'
-import axios from 'axios'
+import api from '../../services/FakeAPIServices.js';
 
 
 export default function TaskList() {
-  const {listaTarefas, setListaTarefas} = useContext(TaskContext)
+  const {taskValue, setTaskValue, listaTarefas, setListaTarefas, setEdit, setTaskEditId} = useContext(TaskContext)
 
   useEffect(() => {
    try {
@@ -19,10 +19,43 @@ export default function TaskList() {
 
   const funcGet = async() => {
     try {
-      const apiResponse = await axios.get('http://172.16.36.48:3000/tasklist')
+      const tarefa = {
+       nome: taskValue
+      }
+      
+      const apiResponse = await api.get('/tasklist')
       setListaTarefas(apiResponse.data)
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const deleteTask = async(task) => {
+      Alert.alert(`Deletando tarefa`, `Você tem certeza que deseja deletar a tarefa ${task.nome}`, [{
+        text: 'Cancelar',
+        style: 'cancel'
+      }, 
+      {
+        text: 'Sim',
+        onPress: async() => {
+          try{
+          await api.delete(`/tasklist/${task.id}`)
+          funcGet()
+        } catch (error) {
+      console.log(error)
+      }}
+
+      }])
+  }
+
+  const preEditTask = async(task) => {
+    try {
+      setEdit(true)
+      setTaskValue(task.nome)
+      setTaskEditId(task.id)
+    } catch (error) {
+      console.log(error)
+      setEdit(false)
     }
   }
 
@@ -31,7 +64,7 @@ export default function TaskList() {
     <ScrollView style={TaskListStyle.taskListContainer}>
      {listaTarefas.map((task)=>{
       return(
-        <TaskItem nome={task.nome}/>
+        <TaskItem id={task.id} key={task.id} nome={task.nome} funcEdit={() => preEditTask(task)} funcDelete={() => deleteTask(task)}/>
       )
      })}
     </ScrollView>

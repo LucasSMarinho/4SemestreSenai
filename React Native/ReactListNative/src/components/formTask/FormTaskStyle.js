@@ -30,6 +30,19 @@ import { StyleSheet } from "react-native";
         backgroundColor: '#60A771',
         justifyContent: 'center'
     },
+    cancelBottomShow : {
+        width: "100%",
+        height: 40,
+        marginTop: 15,
+        padding: 10,
+        borderRadius: 5,
+
+        backgroundColor: '#ffa704',
+        justifyContent: 'center'
+    },
+    cancelBottomHide : {
+        display: "none"
+    },
     taskBottomText : {
        textAlign: 'center',
        color: 'white'

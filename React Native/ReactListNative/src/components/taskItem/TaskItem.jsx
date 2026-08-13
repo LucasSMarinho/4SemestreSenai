@@ -8,10 +8,10 @@ export default function TaskItem(props) {
     <View style={TaskItemStyle.cardBox}>
       <Text style={TaskItemStyle.cardBoxText}>{props.nome}</Text>
       <View style={TaskItemStyle.cardImages}>
-      <TouchableOpacity onPress={props.funcDelete} style={[TaskItemStyle.taskPressableTrash, TaskItemStyle.taskPressable]}>
+      <TouchableOpacity onPress={() => props.funcDelete(props)} style={[TaskItemStyle.taskPressableTrash, TaskItemStyle.taskPressable]}>
       <Image style={TaskItemStyle.taskItemImage} source={TrashImage}/>
       </TouchableOpacity>
-      <TouchableOpacity style={[TaskItemStyle.taskPressablePen, TaskItemStyle.taskPressable]}>
+      <TouchableOpacity onPress={() => props.funcEdit(props)} style={[TaskItemStyle.taskPressablePen, TaskItemStyle.taskPressable]}>
       <Image style={TaskItemStyle.taskItemImage} source={PenImage}/>
       </TouchableOpacity>
       </View>
